@@ -1,0 +1,114 @@
+//다양한 리듬꾸미기 경우의수
+#include<stdio.h>
+#pragma warning(disable:4996)
+int selectLength(const char *msg);
+void selectPattern(int pattern[], int select);
+void output(int pattern[], int select);
+int main(void)
+{
+	while (1)
+	{
+		int select = 0;
+		while (1)
+		{
+			printf("*************************************************************************\n");
+			select = selectLength("원하는 리듬 꾸미기의 마디 길이를 입력하세요: ");
+			if (select == 1) break;
+			else if (select == 2)break;
+			else if (select == 3)break;
+			else if (select == 4)break;
+		}
+		int pattern[4] = { 0 };//나중에 동적메모리 할당으로 바꿔야겠다 select만큼 주는걸로
+		selectPattern(pattern, select);
+
+		output(pattern, select);
+	}
+	getchar();
+	return 0;
+}
+int selectLength(const char *msg)
+{
+	int select = 0;
+	printf(msg);
+	scanf("%d", &select);
+	getchar();
+	return select;
+}
+void selectPattern(int pattern[], int select)
+{
+	printf("\n원하는 리듬 꾸미기의 패턴을 입력하세요: ");
+	for (int i = 4-select; i < 4; i++)
+	{
+		scanf("%d", &pattern[i]);
+		if (pattern[i] < 1 || pattern[i]>3)
+		{
+			printf("잘못된 입력입니다 다시 입력해주세요: ");
+			i--;
+		}
+		getchar();
+	}
+}
+void output(int pattern[], int select)
+{
+	char singleLine[7][7] = { "심벌L", "심벌R", "탐1", "탐2", "탐3", "라이드", "스네어" };
+	char doubleLine[5][7] = { "탐1", "탐2", "탐3", "라이드", "스네어" };
+	switch (4 - select)
+	{
+	case(2):
+		if (pattern[2] == 0)
+			printf(" 기본박 \n");
+		else if (pattern[2] == 1)
+		{
+			printf("\n싱글: ");
+			for (int i = 0; i < 7; i++)
+				printf("%s ", singleLine[i]);
+			printf("\n더블: ");
+			for (int i = 0; i < 5; i++)
+				printf("%s ", doubleLine[i]);
+		}
+		else if (pattern[2] == 2)
+		{
+			printf("\n더블: ");
+			for (int i = 0; i < 5; i++)
+				printf("%s ", doubleLine[i]);
+			printf("\n싱글: ");
+			for (int i = 0; i < 7; i++)
+				printf("%s ", singleLine[i]);
+		}
+		else if (pattern[2] == 3)
+		{
+			printf("\n싱글: ");
+			for (int i = 0; i < 7; i++)
+				printf("%s ", singleLine[i]);
+			printf("\n싱글: ");
+			for (int i = 0; i < 7; i++)
+				printf("%s ", singleLine[i]);
+		}
+		printf("\n");
+		//printf("\n-------------------------------------------------------------------------------\n");
+	case(3):
+		if (pattern[3] == 0)
+			printf(" 기본박 \n");
+		else if (pattern[3] == 1)
+		{
+			printf("\n싱글: ");
+			for (int i = 0; i < 7; i++)
+				printf("%s ", singleLine[i]);
+		}
+		else if (pattern[3] == 2)
+		{
+			printf("\n싱글: ");
+			for (int i = 0; i < 7; i++)
+				printf("%s ", singleLine[i]);
+		}
+		else if (pattern[3] == 3)
+		{
+			printf("\n더블: ");
+			for (int i = 0; i < 5; i++)
+				printf("%s ", doubleLine[i]);
+		}
+	default:; break;
+	}
+	printf("\n");
+	return;
+}
